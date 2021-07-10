@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-const AddProduct = () => {
-    const [productName, setProductName] = useState();
-    const [details, setDetails] = useState();
-    const [owner, setOwner] = useState();
+const AddProduct = ({owner, details, productName, setProductName, setDetails, socket }) => {
 
-    // Add a Product
+    // Add a Product with axios post
     const handleSubmit = async (e) => {
         e.preventDefault();
         axios({
@@ -18,6 +15,9 @@ const AddProduct = () => {
             }
         }).then((res) => {
                 console.log(res)
+                socket.emit('addProduct', {
+                    isAdded : true
+                });
             })
             .catch((err) => {
                 console.log(err)
@@ -32,8 +32,6 @@ const AddProduct = () => {
                 <input type="text" name="productName" onChange={(e) => setProductName(e.target.value)} required /><br /><br />
                 <label htmlFor="details" >Input For Details</label>
                 <input type="textarea" name="details" onChange={(e) => setDetails(e.target.value)} required /><br /><br />
-                <label htmlFor="owner" >Input For Owner</label>
-                <input type="textarea" name="owner" onChange={(e) => setOwner(e.target.value)} required /><br /><br />
                 <button>Submit</button>
             </form>
         </>
