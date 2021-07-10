@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-const AddProduct = ({owner, details, productName, setProductName, setDetails, socket }) => {
+const AddProduct = ({owner, details, productName, setProductName, setDetails }) => {
 
     // Add a Product with axios post
     const handleSubmit = async (e) => {
+        console.log(owner);
         e.preventDefault();
         axios({
             method: 'POST',
@@ -11,16 +12,13 @@ const AddProduct = ({owner, details, productName, setProductName, setDetails, so
             data: {
                 name: productName,
                 details,
-                owner
+                owner: owner
             }
         }).then((res) => {
-                console.log(res)
-                socket.emit('addProduct', {
-                    isAdded : true
-                });
+                console.log(res);
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             })
         e.target.reset();
     }
