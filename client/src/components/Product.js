@@ -20,7 +20,7 @@ const Product = ({product, owner}) => {
         console.log(data);
     });
     
-    useEffect(() => { // If the new offer received to server, refresh the data for this product
+    useEffect(() => { // If the new offer received to server, refresh the data just for this product
             async function fetchProductByID() {
                 const result = await axios(`http://localhost:5000/products/${product._id}`)
                 console.log(result.data);
