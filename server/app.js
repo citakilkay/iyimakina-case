@@ -23,11 +23,11 @@ const socketIO = new Server(server, {
 });
 socketIO.on('connection', socket => {
     console.log(socket.id)
-    socket.on('offering', offer => {
-        socket.broadcast.emit('offering', true);
+    socket.on('offering', data => {
+        socket.broadcast.emit('offering', data);
     })
     socket.on('offered', data => {
-        socket.emit('new-offer', true);
+        socket.emit('new-offer', false);
     })
 });
 

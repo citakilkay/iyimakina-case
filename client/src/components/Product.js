@@ -13,7 +13,6 @@ const Product = ({product, owner}) => {
     // Sockets
     socket.on('offering', data => { // listening for someone offering to this product
         setIsOffering(data);
-        console.log(data);
     })
     socket.on('new-offer', data => { // listening for someone offered a new offer.
         setIsOffering(false);
@@ -37,10 +36,13 @@ const Product = ({product, owner}) => {
         }
         console.log(productByID)
     }, [productByID])
+    useEffect(()=> {
+        console.log(isOffering)
+    },[isOffering])
 
     // Info to server giving offer by this user
     const handleKeyPress = () => {
-        socket.emit('offering', offer);
+        socket.emit('offering', true);
     }
 
     // Give an offer
@@ -76,7 +78,7 @@ const Product = ({product, owner}) => {
                     </div>
                 )
             })}
-            <form onSubmit={handleSubmit} style={{display: isOffering ? 'none' : 'block' }}>
+            <form onSubmit={handleSubmit} style={{display: isOffering ? 'none' : 'inline-block' }}>
                 <label htmlFor="offer">Give an offer</label>
                 <input type="text" name="offer" onChange={(e) => setOffer(e.target.value)} onKeyPress={handleKeyPress} required /><br /><br />
                 <button type="submit">Offer</button>
@@ -87,3 +89,5 @@ const Product = ({product, owner}) => {
     )
 }
 export default Product
+
+
