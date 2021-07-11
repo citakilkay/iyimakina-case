@@ -28,7 +28,7 @@ const Product = ({product, owner}) => {
             }
             fetchProductByID()
             setIsOffering(false);
-    }, [isOffered])
+    }, [isOffered, product._id])
 
     useEffect(() => { // If this product refresh, then set the newestOffers. Because when received a new offer, just offers array of product changing.
         if(productByID.offers) {
@@ -83,8 +83,6 @@ const Product = ({product, owner}) => {
                 <input type="text" name="offer" onChange={(e) => setOffer(e.target.value)} onKeyPress={handleKeyPress} required /><br /><br />
                 <button type="submit">Offer</button>
             </form>
-            <h1>Offered{isOffered}</h1>
-            <h1>Offereing{isOffering}</h1>
         </div>
     )
 }
