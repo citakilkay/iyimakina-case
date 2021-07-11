@@ -10,6 +10,7 @@ import { Server } from 'socket.io';
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Create Server
 const server = app.listen(port, () => {
     console.log(`The database listening at http://localhost:${port}`);
 });
@@ -22,9 +23,15 @@ const socketIO = new Server(server, {
 });
 socketIO.on('connection', socket => {
     console.log(socket.id)
+    socket.on('offering', offer => {
+        socket.broadcast.emit('offering', true);
+    })
+    socket.on('offered', data => {
+        socket.emit('new-offer', true);
+    })
 });
 
-//Mongoose and Create Server
+//Mongoose
 mongoose.connect(process.env.DB_CONNECTION, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

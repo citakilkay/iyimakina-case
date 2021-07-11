@@ -11,13 +11,8 @@ function App() {
   const [owner, setOwner] = useState(socketID);
   const [products, setProducts] = useState([]);
 
-  // Socket.IO
- /* const socket = io('http://localhost:5000');
-  socket.on('connect', socket => {
-    setOwner(socket.id);
-  })*/
+  // Fetch Products
   useEffect(() => {
-    setOwner(socketID)
     console.log(owner);
     async function fetchProducts() {
       const result = await axios.get('http://localhost:5000/products');
@@ -26,13 +21,16 @@ function App() {
     }
     fetchProducts();
   }, [productName]);
-  // Fetch Products
+
+  useEffect(() => {
+    setOwner(socketID)
+  }, [products])
 
   return(
     <>
-      <h1>Your Id: {socketID}</h1>
+      <h1>Your Id: {owner}</h1>
       <AddProduct owner={owner} details={details} productName={productName} setDetails={setDetails} setProductName={setProductName}  />
-      <ProductsList products={products}/>
+      <ProductsList products={products} owner={owner} />
     </>
   );
 }

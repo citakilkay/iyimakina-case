@@ -11,6 +11,16 @@ export const getAllProducts = async (req, res) => {
     }
 }
 
+export const getProductByID = async (req, res) => {
+    const productByID = await Product.findById()
+    try {
+        const productByID = await Product.findById(req.params.id);
+        res.json(productByID);
+    } catch (err) {
+        res.json({ message: err.message });
+    }
+}
+
 export const addProduct =  async (req, res) => {
     console.log(req.body);
     const { name, owner, details } = req.body;
@@ -22,4 +32,18 @@ export const addProduct =  async (req, res) => {
     } catch (err) {
         res.json({ message: err.message });
     }
-} 
+}
+
+export const giveOffer = async (req, res) => {
+    console.log(req.body);
+    const {offer, owner, productID} = req.body;
+    console.log('this is: ', offer)
+    try {
+        const result = await Product.findById(productID)
+        result.offers.push([offer, owner]);
+        result.save();
+        res.redirect('/');
+    } catch (err) {
+        console.log(err);
+    }
+}

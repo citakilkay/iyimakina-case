@@ -4,7 +4,6 @@ const AddProduct = ({owner, details, productName, setProductName, setDetails }) 
 
     // Add a Product with axios post
     const handleSubmit = async (e) => {
-        console.log(owner);
         e.preventDefault();
         axios({
             method: 'POST',
@@ -16,11 +15,11 @@ const AddProduct = ({owner, details, productName, setProductName, setDetails }) 
             }
         }).then((res) => {
                 console.log(res);
+                e.target.reset();
             })
             .catch((err) => {
                 console.log(err);
             })
-        e.target.reset();
     }
 
     return (
